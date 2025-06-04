@@ -1523,8 +1523,16 @@ bool parseFrameFilename(const std::string& frame_filename, size_t timestamp_sequ
   size_t ix2 = frame_filename.find("_", ix1 + 1);
   size_t ix3 = frame_filename.find(".", ix2 + 1);
 
+  if(ix1 == std::string::npos ||
+     ix2 == std::string::npos ||
+     ix3 == std::string::npos)
+  {
+    LOG_ERROR << "could not find timestamp or sequence markers";
+    return false;
+  }
+
   std::string ts = frame_filename.substr(0, ix1);
-  std::string seq = frame_filename.substr(ix2 + 1, ix3);
+  std::string seq = frame_filename.substr(ix2 + 1, ix3 - ix2 - 1);
 
   LOG_DEBUG << "ts: " << ts << ", seq: " << seq;
 
