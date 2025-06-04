@@ -70,7 +70,7 @@ void sigusr1_handler(int s)
 /// [pause]
 }
 
-//The following demostrates how to create a custom logger
+//The following demonstrates how to create a custom logger
 /// [logger]
 #include <fstream>
 #include <cstdlib>
