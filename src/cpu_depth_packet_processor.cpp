@@ -503,8 +503,9 @@ public:
       for(int i = 0; i < 3; ++i, m_ptr += 3, m_out += 3, offset += 3)
       {
         float norm2 = m_ptr[0] * m_ptr[0] + m_ptr[1] * m_ptr[1];
-        float inv_norm = 1.0f / std::sqrt(norm2);
-        inv_norm = (inv_norm == inv_norm) ? inv_norm : std::numeric_limits<float>::infinity();
+        float inv_norm = 0.0f;
+        if(norm2 > 0.f)
+          inv_norm = 1.0f / std::sqrt(norm2);
 
         m_normalized[0] = m_ptr[0] * inv_norm;
         m_normalized[1] = m_ptr[1] * inv_norm;
@@ -540,9 +541,10 @@ public:
 
             const float *other_m_ptr = (m.ptr(y + yi, x + xi)->val) + offset;
             float other_norm2 = other_m_ptr[0] * other_m_ptr[0] + other_m_ptr[1] * other_m_ptr[1];
-            // TODO: maybe fix numeric problems when norm = 0 - original code uses reciprocal square root, which returns +inf for +0
-            float other_inv_norm = 1.0f / std::sqrt(other_norm2);
-            other_inv_norm = (other_inv_norm == other_inv_norm) ? other_inv_norm : std::numeric_limits<float>::infinity();
+            // handle zero norm to avoid inf * 0 producing NaNs
+            float other_inv_norm = 0.0f;
+            if(other_norm2 > 0.f)
+              other_inv_norm = 1.0f / std::sqrt(other_norm2);
 
             other_m_normalized[0] = other_m_ptr[0] * other_inv_norm;
             other_m_normalized[1] = other_m_ptr[1] * other_inv_norm;
