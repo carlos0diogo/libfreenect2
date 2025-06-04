@@ -24,7 +24,7 @@
  * either License.
  */
 
-/** @file packet_processor.h Packet processor definitions. */
+/** @file allocator.cpp Memory allocation utilities. */
 
 #include "libfreenect2/allocator.h"
 #include "libfreenect2/threading.h"
